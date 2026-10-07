@@ -6,6 +6,14 @@ using LirsPortal.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+// Allow React frontend origin (Day 3 Frontend Integration)
+builder.Services.AddCors(options =>
+    options.AddPolicy("portal", policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()));
+
 builder.Services.AddSingleton<DbConnectionFactory>();
 builder.Services.AddScoped<TaxpayerRepository>();
 builder.Services.AddScoped<PaymentRepository>();
@@ -21,6 +29,7 @@ app.UseExceptionHandler(errorApp => errorApp.Run(async context =>
     await context.Response.WriteAsJsonAsync(new ApiError("Something went wrong. Please try again.", "SERVER_ERROR"));
 }));
 
-app.UseHttpsRedirection();
+app.UseCors("portal");
+
 app.MapControllers();
 app.Run();

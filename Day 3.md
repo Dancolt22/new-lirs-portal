@@ -194,10 +194,13 @@ h1 {
 
 **Responsive design** means a page adjusts to any screen size, using **media queries**.
 ```css
-.cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.cards { display: grid; grid-template-columns: 1fr; gap: 16px; font-size: 10px;}
 
 @media (min-width: 768px) {
-  .cards { grid-template-columns: repeat(3, 1fr); }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); font-size: 15px }
+}
+@media (min-width: 1080px){
+  .cards{ display: grid; grid-template-columns: repeat(4, 1fr); font-size: 18px;}
 }
 ```
 *Example:* Cards stack in one column on a phone and sit in three columns on a laptop.
@@ -210,13 +213,13 @@ h1 {
 * { box-sizing: border-box; }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif, arial-helvetica;
   margin: 0;
   background: #f5f7fa;
   color: #222;
 }
 
-.container { max-width: 900px; margin: 0 auto; padding: 16px; }
+.container { max-width: 900px; margin: 0 5px; padding: 16px;}
 
 .card {
   background: white;
@@ -322,6 +325,7 @@ const customers = [
 *Example:* A customer list returned by a server.
 
 **Array methods** process lists without loops.
+
 
 | Method | What it does | Example |
 |---|---|---|
@@ -469,7 +473,7 @@ async function loadTaxpayers() {
 **Modules** let JavaScript be split across files with `export` and `import`.
 ```js
 // tax.js
-export function calculateTax(income, rate) { return income * rate; }
+async export function calculateTax(income, rate) { return income * rate; }
 
 // app.js
 import { calculateTax } from "./tax.js";

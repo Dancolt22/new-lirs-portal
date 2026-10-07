@@ -18,7 +18,7 @@ Clone URL:  https://github.com/Dancolt22/new-lirs-portal.git
 
 
 --------------------------------------------------------------------------------
-PART 2: INSTRUCTOR SETUP & PUSH INSTRUCTIONS
+PART 2:  SETUP & PUSH INSTRUCTIONS
 --------------------------------------------------------------------------------
 From your active workspace folder (C:\Users\HP\Desktop\LIRS2):
 
