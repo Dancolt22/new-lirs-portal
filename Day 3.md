@@ -168,7 +168,7 @@ h1 {
 **Units.** `px` is a fixed pixel size. `%` is relative to the parent. `rem` is relative to the base font size. `vw` and `vh` are relative to the screen.
 *Example:* Use `rem` for text so it scales with a user's settings, and `%` for widths so layouts stretch.
 
-**Colours** can be names (`red`), hex codes (`#1a3c6e`), or `rgb(26, 60, 110)`.
+**Colours** can be names (`red`), hex codes (`#1a3c6e`), or `rgb(206, 36, 130)`.
 *Example:* A brand colour is defined once and reused.
 
 **Flexbox** lays items out in a row or column and spaces them evenly.
