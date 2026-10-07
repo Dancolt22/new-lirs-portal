@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "a9c12345-6789-4def-0123-abcdef456789",
+		"name": "LIRS Portal",
+		"description": "Postman test collection for LIRS Taxpayer Mini-Portal API built during Day 2.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 Get all taxpayers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Filter taxpayers by TIN",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers?tin=1000000001",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers"],
+					"query": [
+						{
+							"key": "tin",
+							"value": "1000000001"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 Get taxpayer 101",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers/101",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers", "101"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 Get non-existent taxpayer (404)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers/999",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers", "999"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5 Get taxpayer 101 returns",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers/101/returns",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers", "101", "returns"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 Get taxpayer 101 balance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers/101/balance",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers", "101", "balance"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 Record valid payment (201)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"returnId\": 2,\n  \"amount\": 150000.00,\n  \"channel\": \"Card\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "payments"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 Verify balance after payment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/taxpayers/101/balance",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "taxpayers", "101", "balance"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 Payment validation error: zero amount (400)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"returnId\": 2,\n  \"amount\": 0,\n  \"channel\": \"Card\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "payments"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 Payment validation error: invalid channel (400)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"returnId\": 2,\n  \"amount\": 10000,\n  \"channel\": \"Cash\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "payments"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 Business rule error: overpayment (400)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"returnId\": 5,\n  \"amount\": 999999999.00,\n  \"channel\": \"Bank\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "payments"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 Return not found error (404)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"returnId\": 99,\n  \"amount\": 10000,\n  \"channel\": \"Bank\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/payments",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "payments"]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5123",
+			"type": "string"
+		}
+	]
+}

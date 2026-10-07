@@ -1,0 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;  
+}
+body{
+    background-color: red;
+}
+header{
+    background: black;
+    color: white;
+}
+p{
+    color: blue;
+}
+.nav-items{
+    text-decoration: none;
+    padding: 20px;
+}
+.home-link{
+    text-decoration: none;
+    color: white;
+}
+#submit-btn{
+    background-color: blue;
+    color: white;
+}
+header nav a{
+    text-decoration: none;
+    text-align: center;
+    color: white;
+}
+header nav a:hover{
+    color: orange;
+}
+header nav a:active{
+    color: red;
+}
+header nav a:visited{
+    color: purple;
+}
+header nav button{
+    padding: 2px;
+    background-color: orange;
+    color: black;
+    border: 3px solid black;
+    border-radius: 10px;
+    
+}
+header nav button:hover{
+    background-color: red;
+}

@@ -1,0 +1,139 @@
+================================================================================
+LIRS TAXPAYER MINI-PORTAL: GITHUB SETUP & COLLABORATION GUIDE
+================================================================================
+Training: Professional Software Development for LIRS IT Team (Day 3 Transition)
+Instructor: Digital Fortress Institute (DFI)
+Repository Name: new-lirs-portal
+GitHub User: Dancolt22 (or your active GitHub account)
+Repository URL: https://github.com/Dancolt22/new-lirs-portal.git
+================================================================================
+
+
+--------------------------------------------------------------------------------
+PART 1: REPOSITORY DETAILS
+--------------------------------------------------------------------------------
+Repository: https://github.com/Dancolt22/new-lirs-portal
+Clone URL:  https://github.com/Dancolt22/new-lirs-portal.git
+
+
+
+--------------------------------------------------------------------------------
+PART 2: INSTRUCTOR SETUP & PUSH INSTRUCTIONS
+--------------------------------------------------------------------------------
+From your active workspace folder (C:\Users\HP\Desktop\LIRS2):
+
+cd C:\Users\HP\Desktop\LIRS2
+git init
+git branch -M main
+git remote add origin https://github.com/Dancolt22/new-lirs-portal.git
+git add .
+git commit -m "feat: complete Day 2 backend API, database schema, and Day 3 frontend materials"
+git push -u origin main --force
+
+>>> Note: If Git credential manager prompts, sign in via browser or use your GitHub PAT.
+
+
+
+--------------------------------------------------------------------------------
+PART 3: HOW TO ADD YOUR STUDENT AS A COLLABORATOR (EXACT CLICK-BY-CLICK)
+--------------------------------------------------------------------------------
+Once your code is pushed to GitHub, add your student so he has full push/pull
+and pull request permissions:
+
+1. In your browser, open your repository page:
+   https://github.com/Dancolt22/new-lirs-portal
+2. Look at the menu tabs near the top (Code, Issues, Pull requests, Actions, Projects, Wiki, Security, Insights, Settings).
+3. Click "Settings" (the gear icon on the far right).
+4. In the left-hand sidebar menu, look under the "Access" section and click "Collaborators".
+   (GitHub may prompt you to confirm your password or 2FA).
+5. Under "Manage access", click the green button: "Add people".
+6. In the search pop-up box, type your student's GitHub username or email address.
+7. Click on his profile from the dropdown list.
+8. Click "Add <username> to this repository".
+9. IMPORTANT: GitHub generates a pending invitation!
+   - Tell your student to check his email and click "Accept invitation".
+   - OR copy the direct invitation link from the screen and send it to him on WhatsApp/Slack:
+     https://github.com/Dancolt22/new-lirs-portal/invitations
+   - He MUST accept before he can push branches.
+
+
+
+--------------------------------------------------------------------------------
+PART 4: STUDENT COMMANDS — HOW TO CLONE & RUN ON STUDENT'S LAPTOP
+--------------------------------------------------------------------------------
+Have your student open PowerShell inside VS Code on his own laptop and run
+these exact commands in order:
+
+### STEP 1: Verify student accepted the GitHub invitation
+The student visits: https://github.com/Dancolt22/new-lirs-portal
+He must see the green "Code" button without any "404 Not Found".
+
+### STEP 2: Clone the repository to the student's laptop
+Run in PowerShell:
+
+# Go to Desktop or preferred training folder:
+cd C:\Users\HP\Desktop
+
+# Clone the repository:
+git clone https://github.com/Dancolt22/new-lirs-portal.git
+
+# Enter the repository folder:
+cd new-lirs-portal
+
+# Confirm all folders (docs, backend, frontend) and files are present:
+git status
+dir
+
+### STEP 3: Verify the student's local backend API builds and runs
+Run in PowerShell:
+
+cd backend\LirsPortal.Api
+dotnet build
+dotnet run --launch-profile http
+
+>>> The student should see:
+    Build succeeded. 0 Error(s).
+    Now listening on: http://localhost:5123 (or student's assigned port)
+
+### STEP 4: Test in browser
+Student opens Chrome/Edge and navigates to:
+http://localhost:5123/api/taxpayers
+
+>>> Expected result:
+    JSON response displaying the 4 fictional LIRS taxpayers:
+    - Adewale Ventures Ltd (101)
+    - Chioma Okafor (102)
+    - Bello Logistics (103)
+    - Ngozi Textiles (104)
+
+### STEP 5: Student is now 100% ready for Day 3!
+He leaves the API running, opens a second terminal tab, and you proceed together
+to Day 3 Step 1 (CORS policy) and Step 2 (Vite React frontend scaffolding).
+
+
+
+--------------------------------------------------------------------------------
+PART 5: QUICK TROUBLESHOOTING CHEAT SHEET
+--------------------------------------------------------------------------------
+Issue 1: "fatal: remote origin already exists"
+Fix:
+git remote set-url origin https://github.com/Dancolt22/new-lirs-portal.git
+
+Issue 2: "Authentication failed" during git push
+Fix:
+GitHub no longer accepts account passwords for CLI push.
+Use a Personal Access Token (PAT):
+1. GitHub -> Settings -> Developer settings -> Personal access tokens -> Tokens (classic)
+2. Generate new token (classic) -> tick "repo" scope -> Generate.
+3. Paste the token as your password when Git prompts.
+
+Issue 3: Student sees "Permission denied to <user>" when pushing a branch
+Fix:
+Student has not clicked "Accept invitation" yet.
+Send him to: https://github.com/Dancolt22/new-lirs-portal/invitations
+
+Issue 4: Student port collision ("Address already in use")
+Fix:
+Student kills any orphaned process using:
+Get-Process -Name dotnet -ErrorAction SilentlyContinue | Stop-Process -Force
+================================================================================

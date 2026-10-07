@@ -1,0 +1,11 @@
+node_modules/
+bin/
+obj/
+**/bin/
+**/obj/
+.env
+*.log
+.vs/
+.vscode/
+dist/
+lirs-taxpayer-portal/
