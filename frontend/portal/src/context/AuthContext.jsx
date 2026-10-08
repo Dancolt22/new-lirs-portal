@@ -1,35 +1,24 @@
 /**
  * ==============================================================================
- * Authentication Context & State Provider (src/context/AuthContext.jsx) - Day 3
+ * Authentication Context & State Provider (src/context/AuthContext.jsx) - Day 4
  * ==============================================================================
- * Architecture Purpose:
- * React Context provides global state across the entire component tree, avoiding
- * "prop drilling" (passing user data down manually through multiple levels).
- *
- * Training Simulation Note:
- * On Day 3, we simulate authentication using pre-configured training users
- * to focus on React UI development, state management, and role-based navigation.
- * Production server authentication (password hashing, ASP.NET Identity, and JWTs)
- * is integrated on Day 4.
+ * Architecture & Security Principles:
+ * 1. Server-Side Cryptographic Authentication:
+ *    Replaces in-memory mock logins with real HTTP calls to `POST /api/auth/login`.
+ *    The server verifies PBKDF2 salted password hashes, enforces lockout penalties,
+ *    and issues a signed JWT token.
+ * 2. Session Persistence:
+ *    Persists the issued JWT token (`lirs_token`) and sanitized user profile (`lirs_user`)
+ *    in browser `sessionStorage`. This ensures that refreshing the browser tab retains
+ *    the authenticated state without requiring re-login, while closing the browser tab
+ *    automatically clears the credentials for security.
  * ==============================================================================
  */
 
 import { createContext, useContext, useState } from "react";
+import { postJson } from "../services/api";
 
-// Create the Context object
 const AuthContext = createContext(null);
-
-/**
- * Predefined training user accounts representing different roles and taxpayers:
- * - Adewale (Taxpayer 101 - Business with outstanding balance)
- * - Chioma  (Taxpayer 102 - Individual with ₦0 balance)
- * - Bisi    (LIRS Revenue Officer - Can search all taxpayers)
- */
-const USERS = [
-  { username: "adewale", password: "pass123", role: "Taxpayer", taxpayerId: 101, name: "Adewale Ventures Ltd" },
-  { username: "chioma",  password: "pass123", role: "Taxpayer", taxpayerId: 102, name: "Chioma Okafor" },
-  { username: "bisi",    password: "pass123", role: "Officer",  taxpayerId: null, name: "Officer Bisi" },
-];
 
 /**
  * AuthProvider wraps the application and exposes user state, login, and logout.
@@ -38,28 +27,44 @@ const USERS = [
  * @param {React.ReactNode} props.children - Child components that require auth access
  */
 export function AuthProvider({ children }) {
-  // Currently authenticated user object, or null when logged out
-  const [user, setUser] = useState(null);
+  // Initialize state from sessionStorage if a prior session exists
+  const [user, setUser] = useState(() => {
+    const saved = sessionStorage.getItem("lirs_user");
+    return saved ? JSON.parse(saved) : null;
+  });
 
   /**
-   * Validates credentials against training user records.
-   * Sets active user state upon success.
+   * Submits credentials to the backend API, stores the signed JWT token,
+   * and updates global user state.
    *
-   * @param {string} username - Entered username
-   * @param {string} password - Entered password
-   * @returns {object|null} - User object if valid, null otherwise
+   * @param {string} username - User login name (e.g. adewale, chioma, bisi)
+   * @param {string} password - User plaintext password (e.g. pass123)
+   * @returns {Promise<object>} - Authenticated user profile
    */
-  function login(username, password) {
-    const found = USERS.find((u) => u.username === username && u.password === password);
-    if (!found) return null;
-    setUser(found);
-    return found;
+  async function login(username, password) {
+    const data = await postJson("/api/auth/login", { username, password });
+    
+    const authenticatedUser = {
+      username: data.username,
+      role: data.role,
+      taxpayerId: data.taxpayerId,
+      name: data.role === "Officer" ? `Officer ${data.username}` : data.username,
+    };
+
+    // Store JWT token and user profile in sessionStorage
+    sessionStorage.setItem("lirs_token", data.token);
+    sessionStorage.setItem("lirs_user", JSON.stringify(authenticatedUser));
+    setUser(authenticatedUser);
+
+    return authenticatedUser;
   }
 
   /**
-   * Clears the active user state, effectively signing the user out.
+   * Clears the active session and tokens from browser storage and state.
    */
   function logout() {
+    sessionStorage.removeItem("lirs_token");
+    sessionStorage.removeItem("lirs_user");
     setUser(null);
   }
 

@@ -1,139 +1,590 @@
-================================================================================
-LIRS TAXPAYER MINI-PORTAL: GITHUB SETUP & COLLABORATION GUIDE
-================================================================================
-Training: Professional Software Development for LIRS IT Team (Day 3 Transition)
-Instructor: Digital Fortress Institute (DFI)
-Repository Name: new-lirs-portal
-GitHub User: Dancolt22 (or your active GitHub account)
+CHAPTER: VERSION CONTROL & COLLABORATION WITH GIT AND GITHUB
+
+Course: Professional Software Development for LIRS IT Team
+Project: LIRS Taxpayer Mini-Portal (new-lirs-portal)
 Repository URL: https://github.com/Dancolt22/new-lirs-portal.git
-================================================================================
-
-
---------------------------------------------------------------------------------
-PART 1: REPOSITORY DETAILS
---------------------------------------------------------------------------------
-Repository: https://github.com/Dancolt22/new-lirs-portal
-Clone URL:  https://github.com/Dancolt22/new-lirs-portal.git
 
 
 
---------------------------------------------------------------------------------
-PART 2:  SETUP & PUSH INSTRUCTIONS
---------------------------------------------------------------------------------
-From your active workspace folder (C:\Users\HP\Desktop\LIRS2):
+1. UNDERSTANDING THE TWO ROLES IN A SOFTWARE TEAM
 
-cd C:\Users\HP\Desktop\LIRS2
-git init
-git branch -M main
-git remote add origin https://github.com/Dancolt22/new-lirs-portal.git
-git add .
-git commit -m "feat: complete Day 2 backend API, database schema, and Day 3 frontend materials"
-git push -u origin main --force
+In modern software engineering, team members interact with Git and GitHub from two distinct perspectives:
 
->>> Note: If Git credential manager prompts, sign in via browser or use your GitHub PAT.
+Role A — The Creator (The Lead / Repository Owner):
+The person who starts the project locally, establishes the folder structure, creates the remote repository on GitHub, and invites team members.
+
+Role B — The Collaborator (The Student / Team Developer):
+The developer who joins the project, clones a copy of the repository onto their own computer, runs the code locally, builds features on separate branches, and submits work for review.
 
 
 
---------------------------------------------------------------------------------
-PART 3: HOW TO ADD YOUR STUDENT AS A COLLABORATOR (EXACT CLICK-BY-CLICK)
---------------------------------------------------------------------------------
-Once your code is pushed to GitHub, add your student so he has full push/pull
-and pull request permissions:
+2. IF YOU ARE THE CREATOR: HOW TO PUBLISH YOUR PROJECT
 
-1. In your browser, open your repository page:
-   https://github.com/Dancolt22/new-lirs-portal
-2. Look at the menu tabs near the top (Code, Issues, Pull requests, Actions, Projects, Wiki, Security, Insights, Settings).
-3. Click "Settings" (the gear icon on the far right).
-4. In the left-hand sidebar menu, look under the "Access" section and click "Collaborators".
-   (GitHub may prompt you to confirm your password or 2FA).
-5. Under "Manage access", click the green button: "Add people".
-6. In the search pop-up box, type your student's GitHub username or email address.
-7. Click on his profile from the dropdown list.
-8. Click "Add <username> to this repository".
-9. IMPORTANT: GitHub generates a pending invitation!
-   - Tell your student to check his email and click "Accept invitation".
-   - OR copy the direct invitation link from the screen and send it to him on WhatsApp/Slack:
+If you are the creator, your job is to take the project files on your laptop, turn your directory into a Git repository, and push the initial version to GitHub.
+
+
+Step 1: Open your terminal inside your project folder
+Make sure your terminal is located at the root of your project:
+
+    cd C:\Users\HP\Desktop\LIRS2
+
+
+Step 2: Initialize Git in your folder
+Think of this as turning on version tracking for this folder:
+
+    git init
+
+
+Step 3: Name your primary branch "main"
+By modern industry convention, the official production branch is called "main":
+
+    git branch -M main
+
+
+Step 4: Connect your local project to GitHub
+Link your local repository to the remote repository you created on GitHub:
+
+    git remote add origin https://github.com/Dancolt22/new-lirs-portal.git
+
+*Textbook Tip: "origin" is simply a friendly nickname for the remote GitHub URL.*
+
+
+Step 5: Stage all your project files
+Think of staging like placing all your clean files into a parcel before sealing it:
+
+    git add .
+
+*Textbook Tip: Any build folders (like bin/, obj/, node_modules/) listed in your .gitignore file will be automatically ignored and left out of the parcel.*
+
+
+Step 6: Create your snapshot (Commit)
+Seal the parcel with a clear, descriptive label explaining what you built:
+
+    git commit -m "feat: initial baseline with backend API, schema, and Day 3 portal"
+
+
+Step 7: Push the code to GitHub
+Upload your sealed commit to GitHub so others can access it:
+
+    git push -u origin main
+
+*Textbook Tip: The "-u" flag stands for "upstream". It tells Git to remember that your local "main" branch is permanently paired with "origin/main". Next time, you will only need to type "git push".*
+
+
+Step 8: Invite your team member / student on GitHub
+Your code is now safely on GitHub! Next, give your student collaborator access:
+  1. Open your browser to: https://github.com/Dancolt22/new-lirs-portal/settings/access
+  2. Click the green "Add people" button.
+  3. Enter your student's GitHub username or email address.
+  4. Click "Add <username> to this repository".
+  5. GitHub will generate an invitation. Send this link to your student:
      https://github.com/Dancolt22/new-lirs-portal/invitations
-   - He MUST accept before he can push branches.
 
 
 
---------------------------------------------------------------------------------
-PART 4: STUDENT COMMANDS — HOW TO CLONE & RUN ON STUDENT'S LAPTOP
---------------------------------------------------------------------------------
-Have your student open PowerShell inside VS Code on his own laptop and run
-these exact commands in order:
+3. IF YOU ARE THE COLLABORATOR / STUDENT: HOW TO GET THE CODE AND RUN IT
 
-### STEP 1: Verify student accepted the GitHub invitation
-The student visits: https://github.com/Dancolt22/new-lirs-portal
-He must see the green "Code" button without any "404 Not Found".
-
-### STEP 2: Clone the repository to the student's laptop
-Run in PowerShell:
-
-# Go to Desktop or preferred training folder:
-cd C:\Users\HP\Desktop
-
-# Clone the repository:
-git clone https://github.com/Dancolt22/new-lirs-portal.git
-
-# Enter the repository folder:
-cd new-lirs-portal
-
-# Confirm all folders (docs, backend, frontend) and files are present:
-git status
-dir
-
-### STEP 3: Verify the student's local backend API builds and runs
-Run in PowerShell:
-
-cd backend\LirsPortal.Api
-dotnet build
-dotnet run --launch-profile http
-
->>> The student should see:
-    Build succeeded. 0 Error(s).
-    Now listening on: http://localhost:5123 (or student's assigned port)
-
-### STEP 4: Test in browser
-Student opens Chrome/Edge and navigates to:
-http://localhost:5123/api/taxpayers
-
->>> Expected result:
-    JSON response displaying the 4 fictional LIRS taxpayers:
-    - Adewale Ventures Ltd (101)
-    - Chioma Okafor (102)
-    - Bello Logistics (103)
-    - Ngozi Textiles (104)
-
-### STEP 5: Student is now 100% ready for Day 3!
-He leaves the API running, opens a second terminal tab, and you proceed together
-to Day 3 Step 1 (CORS policy) and Step 2 (Vite React frontend scaffolding).
+If you are the student joining the project, you do not initialize a new repository. Instead, you download (clone) the creator's existing repository to your computer.
 
 
+Step 1: Accept the invitation
+Before doing anything in the terminal:
+  1. Open your email or visit: https://github.com/Dancolt22/new-lirs-portal/invitations
+  2. Click "Accept invitation".
+  3. Confirm you can view the repository without a 404 error.
 
---------------------------------------------------------------------------------
-PART 5: QUICK TROUBLESHOOTING CHEAT SHEET
---------------------------------------------------------------------------------
-Issue 1: "fatal: remote origin already exists"
-Fix:
-git remote set-url origin https://github.com/Dancolt22/new-lirs-portal.git
 
-Issue 2: "Authentication failed" during git push
-Fix:
-GitHub no longer accepts account passwords for CLI push.
-Use a Personal Access Token (PAT):
-1. GitHub -> Settings -> Developer settings -> Personal access tokens -> Tokens (classic)
-2. Generate new token (classic) -> tick "repo" scope -> Generate.
-3. Paste the token as your password when Git prompts.
+Step 2: Choose where to store your work
+Open PowerShell or your VS Code terminal and move to your preferred workspace:
 
-Issue 3: Student sees "Permission denied to <user>" when pushing a branch
-Fix:
-Student has not clicked "Accept invitation" yet.
-Send him to: https://github.com/Dancolt22/new-lirs-portal/invitations
+    cd C:\Users\HP\Desktop
 
-Issue 4: Student port collision ("Address already in use")
-Fix:
-Student kills any orphaned process using:
-Get-Process -Name dotnet -ErrorAction SilentlyContinue | Stop-Process -Force
-================================================================================
+
+Step 3: Clone the repository to your machine
+Download the complete project history and source files with one command:
+
+    git clone https://github.com/Dancolt22/new-lirs-portal.git
+
+
+Step 4: Enter the new project directory
+Move into the folder that Git just created for you:
+
+    cd new-lirs-portal
+
+Check that all project folders are present:
+
+    dir
+
+*You should see: backend, frontend, docs, and README.md.*
+
+
+Step 5: Run the backend API
+Move into the API directory, compile the code, and launch the server:
+
+    cd backend\LirsPortal.Api
+    dotnet build
+    dotnet run --urls "http://localhost:5123"
+
+*You should see: "Now listening on: http://localhost:5123".*
+*Test in your browser at: http://localhost:5123/api/taxpayers.*
+
+
+Step 6: Run the React frontend portal
+Keep your backend API running, open a SECOND terminal tab, and start Vite:
+
+    cd C:\Users\HP\Desktop\new-lirs-portal\frontend\portal
+    npm install
+    npm run dev
+
+*Open http://localhost:5173 in your browser to interact with the portal!*
+
+
+
+4. THE EVERYDAY WORKFLOW: HOW TEAMS COLLABORATE DAILY
+
+Once both the creator and the collaborator have the project set up, how do they work together without stepping on each other's toes? Follow this daily cycle:
+
+
+Rule 1: Always start by getting the latest changes
+Before writing any code in the morning, make sure your computer has whatever your teammate pushed yesterday:
+
+    git checkout main
+    git pull origin main
+
+
+Rule 2: Never work directly on the "main" branch
+Create a dedicated "feature branch" for the task you are tackling today:
+
+    git checkout -b feature/taxpayer-search
+
+
+Rule 3: Check your progress frequently
+See what files you have modified at any moment:
+
+    git status
+
+
+Rule 4: Save your milestones
+When a feature or bug fix works, stage and commit it:
+
+    git add .
+    git commit -m "feat: implement 10-digit TIN search filter"
+
+
+Rule 5: Share your feature branch with the team
+Push your feature branch up to GitHub:
+
+    git push -u origin feature/taxpayer-search
+
+
+Rule 6: Open a Pull Request (PR)
+Go to GitHub, click "Compare & pull request", have your partner review your code changes, and merge the branch into main!
+
+
+
+5. EVERYDAY TROUBLESHOOTING CHEAT SHEET
+
+Situation 1: "fatal: remote origin already exists"
+  Meaning: Your folder is already linked to a remote URL.
+  Fix:     git remote set-url origin https://github.com/Dancolt22/new-lirs-portal.git
+
+
+Situation 2: "Permission denied (publickey) or 403 Forbidden"
+  Meaning: The student has not clicked "Accept invitation" yet, or Git is using the wrong login on Windows.
+  Fix:     Visit https://github.com/Dancolt22/new-lirs-portal/invitations and accept.
+
+
+Situation 3: "Port 5123 / 5173 is already in use"
+  Meaning: A previous API or Node process is still running silently in the background.
+  Fix:     Run this in PowerShell:
+           Get-Process -Name dotnet,node -ErrorAction SilentlyContinue | Stop-Process -Force
+
+
+Situation 4: "I made changes I want to discard and start fresh"
+  Meaning: You want to reset a modified file back to what is currently in Git.
+  Fix:     git restore <filename>
+
+6. THE ALL-IN-ONE GIT & GITHUB ACTIONS TEXTBOOK DICTIONARY
+
+Welcome to the definitive reference manual for Git version control and GitHub Actions automation. This dictionary is organized systematically from mental models and core daily commands to branching architectures, emergency recovery, team protocols, and complete CI/CD workflow engineering.
+
+
+PART I: THE GIT ARCHITECTURE & MENTAL MODEL
+
+1. The Three Local Trees + One Remote Tree
+Git tracks files across four distinct environments:
+- Working Directory: The actual files you see and edit on your computer's filesystem.
+- Staging Area (Index): The transition buffer where you collect specific changes before committing.
+- Local Repository (HEAD): The local database (.git/) containing committed snapshots on your current branch.
+- Remote Repository (origin): The shared server on GitHub hosting the team's canonical branches.
+
+2. Git Object Types
+Under the hood, Git is a content-addressable key-value datastore. Every object is named by its cryptographic hash:
+- Blob: The raw contents of a file (independent of its filename or permissions).
+- Tree: A directory listing pointing to blobs and nested sub-trees, preserving filenames and mode bits.
+- Commit: A 40-character SHA hash linking a top-level Tree object, parent commit(s), author, timestamp, and commit message.
+- Annotated Tag: A permanent, human-readable milestone pointer containing tagger metadata and a message.
+
+3. The "Detached HEAD" State
+What it means: Your HEAD pointer is referencing a specific commit SHA or remote tag directly, rather than pointing to a branch tip.
+Danger: Any new commits created in detached HEAD state will have no branch reference and will be eligible for garbage collection (git gc).
+How to resolve safely:
+[Language: PowerShell]
+    # To keep your experimental commits created in detached HEAD:
+    git branch my-temporary-fix
+    git switch my-temporary-fix
+
+    # Or to abandon them and return to main:
+    git switch main
+
+
+PART II: CORE EVERYDAY COMMANDS (THE DEVELOPER'S DAILY BREAD)
+
+1. git init
+Purpose: Initializes a brand new, empty Git repository in the current folder, creating the hidden .git/ directory.
+Usage:
+[Language: PowerShell]
+    git init
+    git init -b main    # Modern syntax: initializes repository with default branch named 'main'
+
+2. git clone
+Purpose: Clones a remote repository onto your local workstation, creating a working copy and setting up the remote tracking reference.
+Usage:
+[Language: PowerShell]
+    git clone https://github.com/Dancolt22/new-lirs-portal.git
+    git clone --depth 1 https://github.com/Dancolt22/new-lirs-portal.git   # Shallow clone (latest commit only, saves disk & bandwidth)
+    git clone -b feature/tax-api https://github.com/Dancolt22/new-lirs-portal.git # Clone specific branch directly
+
+3. git status
+Purpose: Displays the current branch, files that are untracked, files staged for commit, and modified files not yet staged.
+Usage:
+[Language: PowerShell]
+    git status
+    git status -s    # Short format (shows concise 2-letter status codes: 'M', 'A', '??')
+
+4. git add
+Purpose: Moves changes from the Working Directory into the Staging Area (Index).
+Usage:
+[Language: PowerShell]
+    git add <filename>          # Stage a specific file
+    git add backend/            # Stage an entire folder
+    git add .                   # Stage all modified and untracked files in the current folder
+    git add -u                  # Stage all modified tracked files, but ignore newly created untracked files
+    git add -p <filename>       # Interactive patch mode: review and stage changes hunk by hunk
+
+5. git commit
+Purpose: Packages all staged changes into a permanent, immutable snapshot in your local repository.
+Usage:
+[Language: PowerShell]
+    git commit -m "feat(api): implement idempotent payment processing"
+    git commit -am "fix: handle null taxpayer TIN gracefully"   # Automatically stages modified tracked files and commits
+    git commit --amend -m "feat(api): update commit message"    # Updates the most recent commit message without creating a new commit
+    git commit --amend --no-edit                                # Injects newly staged files into the previous commit
+
+6. git diff
+Purpose: Shows line-by-line differences between files across Git's various states.
+Usage:
+[Language: PowerShell]
+    git diff                    # Shows unstaged changes in working tree vs staging area
+    git diff --staged           # Shows staged changes vs the most recent commit (HEAD)
+    git diff HEAD~1 HEAD        # Shows changes between previous commit and current commit
+    git diff main..feature/pay  # Shows all differences between two branches
+
+7. git log
+Purpose: Displays the commit history of the current branch.
+Usage:
+[Language: PowerShell]
+    git log --oneline --graph --decorate --all   # Visual ASCII tree of all branches and commits
+    git log -n 5                                 # Displays only the last 5 commits
+    git log --author="Adewale"                   # Filters commits by specific author
+    git log --since="2 days ago"                 # Filters commits by time range
+    git log -p backend/database/01_schema.sql    # Shows complete patch diff history for a specific file
+    git log --stat                               # Displays summary of files changed and lines added/deleted
+
+
+PART III: BRANCHING, MERGING & REBASING MASTERY
+
+1. git branch
+Purpose: Lists, creates, renames, or deletes branches.
+Usage:
+[Language: PowerShell]
+    git branch                  # List all local branches
+    git branch -a               # List local and remote tracking branches
+    git branch feature/jwt-auth # Create a new branch without switching to it
+    git branch -M main          # Rename the current branch to 'main'
+    git branch -d feature/done  # Safely delete a merged branch
+    git branch -D feature/temp  # Force delete an unmerged branch
+
+2. git switch & git checkout
+Purpose: Switches between branches or checks out working tree files.
+Usage:
+[Language: PowerShell]
+    git switch main             # Modern syntax: switch to existing branch
+    git switch -c feature/us-06 # Modern syntax: create and immediately switch to a new branch
+    git checkout -b feature/pay # Classic syntax: create and switch to branch
+    git checkout <commit-sha>   # Inspect historical commit in detached HEAD mode
+
+3. git merge
+Purpose: Combines history from another branch into your current active branch.
+Usage:
+[Language: PowerShell]
+    git switch main
+    git merge feature/tax-api   # Fast-forward if linear, or creates a 3-way merge commit if histories diverged
+    git merge --no-ff feature/x # Always generates a merge commit, preserving the branch lifecycle history
+    git merge --abort           # Safely halts a merge with conflicts and restores previous state
+
+Resolving Merge Conflicts:
+1. When Git halts with 'CONFLICT (content): Merge conflict in <file>', open the conflicting file in VS Code.
+2. Locate the conflict markers:
+   <<<<<<< HEAD (Your current branch changes)
+   ...
+   =======
+   ...
+   >>>>>>> feature/tax-api (Incoming branch changes)
+3. Edit the file to the desired state, remove the conflict markers, save, and finalize:
+[Language: PowerShell]
+    git add <file>
+    git commit -m "merge: resolve payment service calculation conflict"
+
+4. git rebase
+Purpose: Re-applies commits from your current branch on top of another base tip, producing a clean, perfectly linear history.
+Usage:
+[Language: PowerShell]
+    git switch feature/jwt-auth
+    git rebase main             # Moves feature branch commits on top of latest main tip
+    git rebase -i HEAD~3        # Interactive rebase: squash, reword, drop, or edit the last 3 commits
+    git rebase --continue       # Continue after resolving a conflict during rebase
+    git rebase --abort          # Abort the rebase and return branch to original state
+
+*Golden Rule of Rebasing: Never rebase commits that have already been pushed to a shared public branch! Only rebase private feature branches before opening a PR.*
+
+5. git cherry-pick
+Purpose: Takes a specific commit from one branch and applies its exact diff as a new commit onto your current branch.
+Usage:
+[Language: PowerShell]
+    git switch main
+    git cherry-pick 4f184b4     # Copies the specific bugfix commit 4f184b4 onto main
+
+
+PART IV: EMERGENCY RESCUE, UNDO & RECOVERY TOOLS
+
+1. git restore
+Purpose: Restores working tree files or unstages changes cleanly.
+Usage:
+[Language: PowerShell]
+    git restore <file>          # Discards unstaged modifications in working directory
+    git restore --staged <file> # Unstages a file back to working tree without losing modifications
+    git restore --source=HEAD~1 <file> # Replaces a file with its state from 1 commit ago
+
+2. git reset
+Purpose: Moves the current branch HEAD to a specified state, with three levels of intensity:
+Usage:
+[Language: PowerShell]
+    git reset --soft HEAD~1     # Undoes the last commit, but keeps all changes staged in the index
+    git reset --mixed HEAD~1    # Default: Undoes the last commit and unstages changes; keeps files in working tree
+    git reset --hard HEAD~1     # DANGER: Completely deletes the commit and wipes changes from working tree!
+
+3. git revert
+Purpose: Safely undoes a public commit by recording a brand new commit with the exact opposite diff.
+Usage:
+[Language: PowerShell]
+    git revert 4f184b4          # Creates a new commit that reverses commit 4f184b4
+    git revert -n <commit>      # Reverts without committing immediately (allows combining multiple reverts)
+
+4. git stash
+Purpose: Temporarily shelves (stashes) uncommitted modifications so you can switch branches with a clean working directory.
+Usage:
+[Language: PowerShell]
+    git stash push -m "WIP: assessment calculation logic"
+    git stash list              # View all saved stash snapshots
+    git stash pop               # Applies the most recent stash and removes it from the stash stack
+    git stash apply             # Applies the most recent stash while keeping it stored
+    git stash drop stash@{0}    # Deletes a specific stash
+    git stash clear             # Deletes all saved stashes
+    git stash -u                # Stashes uncommitted files including untracked files
+
+5. git reflog
+Purpose: The ultimate safety net. Records every single movement of the HEAD pointer across commits, resets, rebases, and checkouts.
+Usage:
+[Language: PowerShell]
+    git reflog                  # Lists recent HEAD positions with reference indices like HEAD@{2}
+    # To recover an accidentally hard-deleted commit or deleted branch:
+    git switch -c recovered-branch HEAD@{3}
+
+6. git clean
+Purpose: Removes untracked files and directories from the working tree.
+Usage:
+[Language: PowerShell]
+    git clean -n                # Dry run: previews what would be deleted
+    git clean -fd               # Force deletes untracked files (-f) and untracked directories (-d)
+
+
+PART V: REMOTE OPERATIONS & TEAM COLLABORATION
+
+1. git remote
+Purpose: Manages connections to remote repository endpoints.
+Usage:
+[Language: PowerShell]
+    git remote -v               # Lists all configured remote nicknames and URLs
+    git remote add origin <url> # Binds a remote URL to the nickname 'origin'
+    git remote set-url origin <url> # Changes the URL of an existing remote
+    git remote prune origin     # Cleans up local references to deleted remote branches
+
+2. git fetch
+Purpose: Downloads commits, files, and refs from a remote repository into your local repository without merging them into your working files.
+Usage:
+[Language: PowerShell]
+    git fetch origin            # Fetches all branches from origin
+    git fetch --prune           # Fetches and removes obsolete remote tracking references
+
+3. git pull
+Purpose: Combines `git fetch` followed by merging into the current local branch.
+Usage:
+[Language: PowerShell]
+    git pull origin main        # Fetches origin/main and merges it into local main
+    git pull --rebase origin main # Best practice: fetches and rebases local commits on top of incoming remote commits
+
+4. git push
+Purpose: Transmits local branch commits to the remote repository.
+Usage:
+[Language: PowerShell]
+    git push origin main
+    git push -u origin feature/pay  # Pushes branch and sets upstream tracking
+    git push origin --delete feature/done # Deletes a branch on the remote server
+    git push --force-with-lease    # Safe force push: rejects push if another teammate pushed commits first
+
+5. git tag
+Purpose: Creates permanent release markers at specific points in history.
+Usage:
+[Language: PowerShell]
+    git tag v1.0.0              # Creates lightweight tag on current commit
+    git tag -a v1.0.0 -m "Release v1.0.0: Day 5 Capstone Production Build" # Annotated tag
+    git push origin v1.0.0      # Pushes specific tag to remote
+    git push origin --tags      # Pushes all local tags to remote
+
+
+PART VI: GITHUB ACTIONS MASTERCLASS (CI/CD TEXTBOOK)
+
+1. The 5 Core Concepts of GitHub Actions
+- Workflow: An automated configurable process defined in a YAML file in `.github/workflows/`.
+- Event: A specific activity that triggers a workflow (e.g. `push`, `pull_request`, `schedule`).
+- Job: A set of sequential steps that execute on the same runner environment. Jobs run in parallel by default.
+- Step: An individual task that can execute commands (`run:`) or invoke reusable actions (`uses:`).
+- Runner: The virtual machine or container running the job (`ubuntu-latest`, `windows-latest`, `macos-latest`).
+
+2. Anatomy of an Enterprise Workflow File (`.github/workflows/ci.yml`)
+[Language: YAML]
+name: LIRS CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:          # Allows manual trigger button in GitHub UI
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # Full history for changelogs and tests
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/portal/package-lock.json
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Restore NuGet Dependencies
+        run: dotnet restore backend/LirsPortal.Api
+
+      - name: Build C# API
+        run: dotnet build backend/LirsPortal.Api --configuration Release --no-restore
+
+      - name: Run xUnit Unit & Security Tests
+        run: dotnet test backend/LirsPortal.Tests --configuration Release --no-build --verbosity normal
+
+      - name: Run Python Starter Pytest Suite
+        run: |
+          pip install pytest
+          python -m pytest backend/starter/test_taxpayers.py
+
+      - name: Install Frontend Dependencies & Build Portal
+        run: |
+          cd frontend/portal
+          npm ci
+          npm run build
+
+3. Dependency Caching (actions/cache)
+Accelerates CI pipeline execution by saving and restoring package directories:
+[Language: YAML]
+      - name: Cache NuGet Packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+4. Managing Secrets & Variables
+Sensitive credentials must NEVER be checked into git. Configure them under:
+GitHub Repository -> Settings -> Secrets and variables -> Actions.
+Accessing secrets inside workflows:
+[Language: YAML]
+      - name: Deploy to Cloud Gateway
+        env:
+          DB_CONNECTION: ${{ secrets.PROD_SQL_CONNECTION_STRING }}
+          JWT_SECRET: ${{ secrets.PROD_JWT_SECRET_KEY }}
+        run: |
+          ./deploy.sh
+
+5. Matrix Builds
+Test across multiple OS environments or runtime versions in parallel:
+[Language: YAML]
+    strategy:
+      matrix:
+        dotnet: [ '8.0.x', '9.0.x' ]
+        os: [ ubuntu-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+
+
+PART VII: ENTERPRISE REPOSITORY HYGIENE & BEST PRACTICES
+
+1. Professional .gitignore Patterns
+- Always ignore compiled artifacts (`bin/`, `obj/`, `dist/`, `build/`).
+- Always ignore dependencies (`node_modules/`, `packages/`, `venv/`).
+- Always ignore local environment configuration (`.env`, `appsettings.Development.json`).
+- Always ignore personal scratch notes and OS files (`.DS_Store`, `Thumbs.db`, `*.log`).
+
+2. Conventional Commits Standard
+Structure commit messages to allow automated changelog generation:
+- `feat:` A new feature for the user (e.g. `feat(auth): add salted PBKDF2 password verification`)
+- `fix:` A bug fix (e.g. `fix(penalty): correct statutory calculation for leap years`)
+- `docs:` Documentation changes only (e.g. `docs(readme): update local installation steps`)
+- `refactor:` Code restructuring that neither fixes a bug nor adds a feature
+- `test:` Adding missing tests or correcting existing tests
+- `chore:` Maintenance changes to build configuration, tooling, or package versions
+- `perf:` Performance optimizations
+
+3. Branch Protection Policy for Enterprise Revenue Platforms
+Recommended configuration for the `main` branch on GitHub:
+- Require a pull request before merging (block direct pushes to main).
+- Require at least 1 approving code review from senior engineering staff.
+- Require status checks to pass before merging (`build-and-test` GitHub Actions pipeline).
+- Require branches to be up to date before merging.
+- Block force pushes (`git push --force`) and branch deletions.

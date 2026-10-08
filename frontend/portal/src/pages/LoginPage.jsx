@@ -29,21 +29,25 @@ export default function LoginPage() {
    * 2. Calls login() from AuthContext
    * 3. Redirects based on user role if credentials match
    */
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     
     // Clear previous error
     setError("");
 
-    const authenticatedUser = login(username.trim(), password);
-    
-    if (!authenticatedUser) {
-      setError("Invalid username or password.");
-      return;
-    }
+    try {
+      const authenticatedUser = await login(username.trim(), password);
+      
+      if (!authenticatedUser) {
+        setError("Invalid username or password.");
+        return;
+      }
 
-    // Role-based landing page redirection
-    navigate(authenticatedUser.role === "Officer" ? "/officer" : "/taxpayer");
+      // Role-based landing page redirection
+      navigate(authenticatedUser.role === "Officer" ? "/officer" : "/taxpayer");
+    } catch (err) {
+      setError(err.message || "Invalid username or password.");
+    }
   }
 
   return (

@@ -8,3 +8,9 @@ obj/
 .vs/
 .vscode/
 dist/
+local_machine_walkthrough_guide.txt
+__pycache__/
+*.pyc
+
+Why.md
+*FINAL*
