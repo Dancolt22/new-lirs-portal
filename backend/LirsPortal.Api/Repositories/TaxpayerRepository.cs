@@ -100,7 +100,8 @@ public class TaxpayerRepository(DbConnectionFactory factory)
 
         using var db = factory.Create();
         
-        // QuerySingleAsync returns the single scalar decimal balance
-        return await db.QuerySingleAsync<decimal>(sql, new { TaxpayerId = taxpayerId });
+        // QuerySingleAsync returns the scalar decimal balance; Math.Max guarantees liability never drops below 0.00
+        var rawBalance = await db.QuerySingleAsync<decimal>(sql, new { TaxpayerId = taxpayerId });
+        return Math.Max(0m, rawBalance);
     }
 }

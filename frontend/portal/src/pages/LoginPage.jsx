@@ -88,11 +88,10 @@ export default function LoginPage() {
         </form>
 
         {/* Training Helper Note */}
-        <div style={{ marginTop: "20px", fontSize: "13px", color: "#666", borderTop: "1px solid #eee", paddingTop: "12px" }}>
-          <strong>Training accounts:</strong><br />
-          • Taxpayer: <code>adewale</code> / <code>pass123</code> (ID 101)<br />
-          • Taxpayer: <code>chioma</code> / <code>pass123</code> (ID 102)<br />
-          • LIRS Officer: <code>bisi</code> / <code>pass123</code>
+        <div style={{ marginTop: "20px", fontSize: "13px", color: "#666", borderTop: "1px solid #eee", paddingTop: "12px", lineHeight: "1.6" }}>
+          <strong>Training accounts (Password for all: <code>pass123</code>):</strong><br />
+          • <strong>Taxpayers:</strong> <code>adewale</code>, <code>chioma</code>, <code>bello</code>, <code>ngozi</code>, <code>emeka</code>, <code>fatima</code>, <code>tunde</code>, <code>amaka</code>, <code>ibrahim</code>, <code>kemi</code>, <code>olumide</code>, <code>zainab</code><br />
+          • <strong>Officers:</strong> <code>bisi</code>, <code>folake</code>
         </div>
       </div>
     </div>

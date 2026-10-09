@@ -68,6 +68,20 @@ public class PaymentServiceTests
     }
 
     [Fact]
+    public async Task RecordPaymentAsync_WhenReturnAlreadySettledOrOverpaid_ThrowsBusinessRuleException()
+    {
+        // Arrange: Tax Due is ₦500,000; citizen already paid ₦500,000 (fully settled)
+        _repo.Returns.Add(new TaxReturn(1, 101, 2025, 5000000m, 500000m, "Approved"));
+        _repo.TotalPaidToReturn = 500000m;
+
+        var request = new PaymentRequest { ReturnId = 1, Amount = 50000m, Channel = "Bank" };
+
+        // Act & Assert: Blocks payment against already settled return
+        var ex = await Assert.ThrowsAsync<BusinessRuleException>(() => _service.RecordPaymentAsync(request));
+        Assert.Contains("already been fully settled", ex.Message);
+    }
+
+    [Fact]
     public async Task RecordPaymentAsync_WhenValid_ReturnsReceiptWithExpectedFormat()
     {
         // Arrange: Outstanding is ₦500,000; valid payment of ₦150,000

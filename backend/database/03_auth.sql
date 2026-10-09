@@ -29,21 +29,32 @@ BEGIN
 END
 GO
 
--- 2. Seed initial training users with PBKDF2 HMAC-SHA256 hashed passwords
--- Password for all three training accounts: "pass123"
+-- 2. Seed training users with PBKDF2 HMAC-SHA256 hashed passwords
+-- Password for all training accounts: "pass123"
 -- Format: {iterations}.{base64-salt}:{base64-subKey}
---
--- Fictional credentials:
--- 1. adewale / pass123 -> Taxpayer for Adewale Ventures Ltd (TaxpayerId: 101)
--- 2. chioma  / pass123 -> Taxpayer for Chioma Okafor (TaxpayerId: 102)
--- 3. bisi    / pass123 -> LIRS Revenue Officer (TaxpayerId: NULL, Role: 'Officer')
 
 DELETE FROM Users;
 
 INSERT INTO Users (Username, PasswordHash, Role, TaxpayerId, FailedAttempts, LockedUntil) VALUES
+-- Original Core Accounts
 ('adewale', '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 101, 0, NULL),
 ('chioma',  '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 102, 0, NULL),
-('bisi',    '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Officer',  NULL, 0, NULL);
+('bisi',    '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Officer',  NULL, 0, NULL),
+
+-- 10+ Additional Taxpayer Accounts
+('bello',   '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 103, 0, NULL),
+('ngozi',   '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 104, 0, NULL),
+('emeka',   '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 105, 0, NULL),
+('fatima',  '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 106, 0, NULL),
+('tunde',   '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 107, 0, NULL),
+('amaka',   '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 108, 0, NULL),
+('ibrahim', '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 109, 0, NULL),
+('kemi',    '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 110, 0, NULL),
+('olumide', '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 111, 0, NULL),
+('zainab',  '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Taxpayer', 112, 0, NULL),
+
+-- Additional Officer Account
+('folake',  '10000.ga13/Me02+MX/Hd9gpHJkQ==:kFGvTNPaHY3scQap24ahQsfLdUraTtVfVRhIbQ9BJFc=', 'Officer',  NULL, 0, NULL);
 GO
 
 -- 3. Verification query to inspect our secure user records

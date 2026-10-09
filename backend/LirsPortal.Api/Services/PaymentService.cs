@@ -43,6 +43,10 @@ public class PaymentService(
         var alreadyPaid = await payments.GetTotalPaidAsync(request.ReturnId);
         var outstanding = taxReturn.TaxDue - alreadyPaid;
 
+        // If the return has already been fully settled or in credit, prevent negative/confusing error displays
+        if (outstanding <= 0)
+            throw new BusinessRuleException("This tax return has already been fully settled. Outstanding balance is 0.00.");
+
         // Rule 4: Anti-Overpayment Policy.
         // A government revenue portal must NEVER accept more money than is legally assessed.
         // Overpayments create complex audit reconciliations, accounting liabilities, and citizen disputes.
